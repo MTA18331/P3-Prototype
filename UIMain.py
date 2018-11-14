@@ -3,6 +3,8 @@ import cv2
 import numpy as np
 import time
 import threading
+import main
+
 
 camera = cv2.VideoCapture(0)
 display_width = 1080
@@ -75,10 +77,8 @@ input_box_popup = pygame.Rect(display_width/2-295, display_height/2-25, 445, 42)
 font = pygame.font.Font(None, 32)
 
 
-def frede(number, name):
-        print('Frede er en abe hilsen {}'.format(name))
-        number += number
-
+def imageProcessing(nr, frame):
+        print("This is the target number nr {}".format(nr))
 
 def runprogressbar(input):
 
@@ -122,19 +122,23 @@ def game_loop():
     text = ''
     start = time.time()
     gameDisplay.blit(mainScreen, (0, 0))
-    t = threading.Thread(target=frede, name='thread2', args=(0,'thread2'))
+
+
+
     while not game_exit:
 
         if runCam:
+
             ret, frame = camera.read()
             gameDisplay.fill([243, 243, 243])
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             frame = np.rot90(frame)
+            t = threading.Thread(target=imageProcessing(nr, frame), name='thread2', args=(nr,frame))
             frame = pygame.surfarray.make_surface(frame)
             frame = pygame.transform.scale(frame, (920, 720))
             gameDisplay.blit(camMenu, (920, 0))
             gameDisplay.blit(frame, (0, 0))
-
+            t.start()
             if nr == 1:
                 gameDisplay.blit(one, (810, 25))  # draws the input on the camerascreen
             if nr == 2:
@@ -215,7 +219,10 @@ def game_loop():
                     if event.key == pygame.K_RETURN:
 
                         try:
-                            if (int(text)) == 1 or 2 or 3 or 4 or 5:
+                            print(int(text))
+
+                            if int(text) == 1 or int(text) == 2 or int(text) == 3 or int(text) == 4 or int(text) == 5:
+                                print("hej")
                                 cScreen = True
                                 active = False
                                 mScreen = False
@@ -234,6 +241,14 @@ def game_loop():
                                     nr = 4
                                 elif (int(text)) == 5:
                                     nr = 5
+                            else:
+                                gameDisplay.fill(white)
+                                if mScreen:
+                                   gameDisplay.blit(mainScreen, (0, 0))
+                                if popUpSearch:
+                                   gameDisplay.blit(cameraScreen, (0, 0))
+                                   gameDisplay.blit(camSearch, (0, 0))
+                                text = "Ingen resultater\r"
                         except ValueError:
                             gameDisplay.fill(white)
                             if mScreen:
@@ -256,24 +271,32 @@ def game_loop():
 
                         if x > 775 and x < 820 and y > 485 and y < 530:  # mouse is on the search button
                             try:
-                                if (int(text)) == 1 or 2 or 3 or 4 or 5:
+                                if int(text) == 1 or int(text) == 2 or int(text) == 3 or int(text) == 4 or int(text) == 5:
 
                                     cScreen = True
                                     active = False
                                     mScreen = False
                                     popUpSearch = False
                                     gameDisplay.blit(cameraScreen, (0, 0))  # draw the camera screen if the input is 1
-                                if (int(text)) == 1:
-                                    nr = 1
+                                    if (int(text)) == 1:
+                                        nr = 1
 
-                                elif (int(text)) == 2:
-                                    nr = 2
-                                elif (int(text)) == 3:
-                                    nr = 3
-                                if (int(text)) == 4:
-                                    nr = 4
-                                if (int(text)) == 5:
-                                    nr = 5
+                                    elif (int(text)) == 2:
+                                        nr = 2
+                                    elif (int(text)) == 3:
+                                        nr = 3
+                                    elif (int(text)) == 4:
+                                        nr = 4
+                                    elif (int(text)) == 5:
+                                        nr = 5
+                                else:
+                                    gameDisplay.fill(white)
+                                    if mScreen:
+                                        gameDisplay.blit(mainScreen, (0, 0))
+                                    if popUpSearch:
+                                        gameDisplay.blit(cameraScreen, (0, 0))
+                                        gameDisplay.blit(camSearch, (0, 0))
+                                    text = "Ingen resultater\r"
 
                             except ValueError:
                                 gameDisplay.fill(
@@ -346,7 +369,7 @@ def game_loop():
                     if popUpSearch:
                         if x > 700 and x < 750 and y > 300 and y < 380:  # mouse is within the serach button in the search pop up
                             try:
-                                if (int(text)) == 1 or 2 or 3 or 4 or 5:
+                                if int(text) == 1 or int(text) == 2 or int(text) == 3 or int(text) == 4 or int(text) == 5:
                                     cScreen = True
                                     active = False
                                     mScreen = False
@@ -358,10 +381,18 @@ def game_loop():
                                         nr = 2
                                     elif (int(text)) == 3:
                                         nr = 3
-                                    if (int(text)) == 4:
+                                    elif (int(text)) == 4:
                                         nr = 4
-                                    if (int(text)) == 5:
+                                    elif (int(text)) == 5:
                                         nr = 5
+                                else:
+                                    gameDisplay.fill(white)
+                                    if mScreen:
+                                        gameDisplay.blit(mainScreen, (0, 0))
+                                    if popUpSearch:
+                                        gameDisplay.blit(cameraScreen, (0, 0))
+                                        gameDisplay.blit(camSearch, (0, 0))
+                                    text = "Ingen resultater\r"
 
                             except ValueError:
                                 gameDisplay.fill(white)
