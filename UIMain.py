@@ -3,6 +3,7 @@ import cv2
 import numpy as np
 import time
 import threading
+import templateMatching2 as tM
 import main
 
 
@@ -11,6 +12,8 @@ display_width = 1080
 display_height = 720
 white = (255, 255, 255)
 black = (0, 0, 0)
+
+
 
 mainScreen = pygame.image.load('UI_Images/mainscreen.png')
 mainHelp = pygame.image.load('UI_Images/mainHelp.png')
@@ -79,6 +82,7 @@ font = pygame.font.Font(None, 32)
 
 def imageProcessing(nr, frame):
         print("This is the target number nr {}".format(nr))
+        #tM.webCam(frame)
 
 def runprogressbar(input):
 
@@ -131,13 +135,15 @@ def game_loop():
 
             ret, frame = camera.read()
             gameDisplay.fill([243, 243, 243])
-            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            frame = np.rot90(frame)
+            #frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            #frame = np.rot90(frame)
+            #cv2.rectangle(frame, (50, 70), (250, 270), (0, 255, 0), 3)
             t = threading.Thread(target=imageProcessing(nr, frame), name='thread2', args=(nr,frame))
             frame = pygame.surfarray.make_surface(frame)
-            frame = pygame.transform.scale(frame, (920, 720))
+            #frame = pygame.transform.scale(frame, (920, 720))
             gameDisplay.blit(camMenu, (920, 0))
             gameDisplay.blit(frame, (0, 0))
+
             t.start()
             if nr == 1:
                 gameDisplay.blit(one, (810, 25))  # draws the input on the camerascreen
