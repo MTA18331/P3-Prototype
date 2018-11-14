@@ -3,16 +3,16 @@ import numpy as np
 import image_threshold as imgThre
 import time
 
-def webcam(frame):
-    #cap = cv2.VideoCapture(0)
+def webcam():
+    cap = cv2.VideoCapture(0)
     startTime = True
 
     template = imgThre.mask
     w, h = template.shape[::-1]
 
     while (True):
-        #ret, frame = cap.read()
-        #frame = cv2.flip(frame, +1)
+        ret, frame = cap.read()
+        frame = cv2.flip(frame, +1)
 
         kernel = np.ones((10, 10), np.float32) / 100
         smoothed = cv2.filter2D(frame, -1, kernel)
@@ -46,14 +46,15 @@ def webcam(frame):
 
         cv2.rectangle(frame, (50, 70), (250, 270), (0, 255, 0), 3)
 
-        #cv2.imshow('thump', template)
-        #cv2.imshow('Frame', frame)
-        #cv2.imshow('mask', roi)
+        cv2.imshow('thump', template)
+        cv2.imshow('Frame', frame)
+        cv2.imshow('mask', roi)
 
-        #key = cv2.waitKey(1)
+        key = cv2.waitKey(1)
 
-        #if key == 27:
-         #   break
+        if key == 27:
+            break
 
-    #cap.release()
-    #cv2.destroyAllWindows()
+    cap.release()
+    cv2.destroyAllWindows()
+
