@@ -270,6 +270,7 @@ def game_loop():
                     if mScreen:  # listen to mouse events related to the main screen
 
                         if x > 775 and x < 820 and y > 485 and y < 530:  # mouse is on the search button
+
                             try:
                                 if int(text) == 1 or int(text) == 2 or int(text) == 3 or int(text) == 4 or int(text) == 5:
 
