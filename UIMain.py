@@ -3,7 +3,6 @@ import cv2
 import numpy as np
 import time
 import threading
-import templateMatching2 as tM
 import image_threshold as imgThre
 from queue import Queue
 
@@ -12,6 +11,7 @@ display_width = 1080
 display_height = 720
 white = (255, 255, 255)
 black = (0, 0, 0)
+
 q= Queue()
 
 
@@ -39,7 +39,7 @@ p7 = pygame.image.load("UI_Images/70.png")
 p8 = pygame.image.load("UI_Images/80.png")
 p9 = pygame.image.load("UI_Images/90.png")
 p10 = pygame.image.load("UI_Images/100.png")
-
+flueben = pygame.image.load("UI_Images/flueben.png")
 
 mainScreen = pygame.transform.scale(mainScreen, (display_width, display_height))
 mainHelp = pygame.transform.scale(mainHelp, (display_width, display_height))
@@ -65,6 +65,7 @@ two = pygame.transform.scale(two, (90, 110))
 three = pygame.transform.scale(three, (90, 110))
 four = pygame.transform.scale(four, (90, 110))
 five = pygame.transform.scale(five, (90, 110))
+
 pygame.init()
 
 gameDisplay = pygame.display.set_mode((display_width, display_height))#, pygame.FULLSCREEN)
@@ -74,10 +75,10 @@ clock = pygame.time.Clock()
 pygame.display.update()
 clock.tick(60)  # frames per second
 start = time.time()
-startTime= True
+startTime = True
 input_box = pygame.Rect(display_width/2-285, display_height/2+130, 520, 42)
 input_box_popup = pygame.Rect(display_width/2-295, display_height/2-25, 445, 42)
-roi_box= pygame.Rect(70, 50, 500, 500)
+roi_box = pygame.Rect(70, 50, 500, 500)
 font = pygame.font.Font(None, 32)
 #roi = mask[70:270, 50:250]
 
@@ -87,9 +88,18 @@ def imageProcessing(nr, start):
         #frame = cv2.flip(frame, +1)
         ret, frame = camera.read()
         frame = cv2.flip(frame, +1)
+        if nr == 1:
+            mask =  imgThre.mask(imgThre.img1)
+        elif nr == 2:
+            mask =  imgThre.mask(imgThre.img2)
+        elif nr == 3:
+            mask = imgThre.mask(imgThre.img3)
+        elif nr==4:
+            mask =  imgThre.mask(imgThre.img4)
+        elif nr == 5:
+            mask = imgThre.mask(imgThre.img5)
 
-
-        template = imgThre.mask
+        template = mask
         w, h = template.shape[::-1]
 
 
@@ -105,15 +115,17 @@ def imageProcessing(nr, start):
         lower_red = np.array([80, 140, 35])  # [90, 100, 150]) grøn handske
         upper_red = np.array([97, 255, 175])
 
-        mask = cv2.inRange(hsv, lower_red, upper_red)
+        mask2 = cv2.inRange(hsv, lower_red, upper_red)
 
-        roi = mask[70:500, 50:500]
-        res = cv2.matchTemplate(roi, template, cv2.TM_CCOEFF_NORMED)
+        roi = mask2[60:500, 60:500]
+        res = cv2.matchTemplate(roi, mask, cv2.TM_CCOEFF_NORMED)
         minval, maxval, minlog, maxlog= cv2.minMaxLoc(res)
         res = maxval
 
         #print(minval, minlog, maxlog)
-        #cv2.imshow("roi",roi)
+        cv2.imshow("roi",roi)
+        cv2.imshow("mask", mask)
+        print(res)
         q.put(res)
         #print("res ", res)
           # draws the box
@@ -151,6 +163,7 @@ def runprogressbar(input):
         gameDisplay.blit(p10, (35, 400))
     elif input >= 3.4:
         gameDisplay.blit(p10, (35, 400))
+        gameDisplay.blit(flueben,(56,443))
 
 
 def game_loop():
@@ -186,7 +199,7 @@ def game_loop():
             frame = pygame.transform.scale(frame, (920, 720))
             gameDisplay.blit(camMenu, (920, 0))
             gameDisplay.blit(frame, (0, 0))
-            pygame.draw.rect(gameDisplay, black, roi_box, 2)
+            pygame.draw.rect(gameDisplay, [0,255,0], roi_box, 2)
             t.start()
             if nr == 1:
                 gameDisplay.blit(one, (810, 25))  # draws the input on the camerascreen
@@ -199,15 +212,13 @@ def game_loop():
             if nr == 5:
                 gameDisplay.blit(five, (810, 25))  # draws the input on the camerascreen
             res= q.get()
-            if res >= 0.65:
+            if res >= 0 and res <= 0.10:
 
                 runprogressbar(time.time() - start)
             else:
                 start=time.time()
             pygame.display.update()
             try:
-
-
                 t.start()
             except:
                 1+1

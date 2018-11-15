@@ -2,18 +2,18 @@ import cv2
 import numpy as np
 
 
-img = cv2.imread('thump3s.jpg',0)
+img1 = cv2.imread('1.png',0)
+img2 = cv2.imread('2.png',0)
+img3 = cv2.imread('3.png',0)
+img4 = cv2.imread('4.png',0)
+img5 = cv2.imread('5.png',0)
 
 # mean blurring
-kernel = np.ones((10, 10), np.float32) / 100
-smoothed = cv2.filter2D(img, -1, kernel)
+def mask(image):
+    image=cv2.resize(image,(440,440))
 
-#hsv = cv2.cvtColor(smoothed, cv2.COLOR_BGR2HSV)
+    return image
 
-#lower_red = np.array([80, 140, 35])    #[90, 100, 150]) grøn handske
-#pper_red = np.array([97, 255, 175])
-
-mask = cv2.inRange(smoothed, 0, 254)
 
 '''cv2.imshow('mask', mask)
 cv2.waitKey(0)
