@@ -19,7 +19,11 @@ mainScreen = pygame.image.load('UI_Images/mainscreen.png')
 mainHelp = pygame.image.load('UI_Images/mainHelp.png')
 cameraScreen = pygame.image.load("UI_Images/camscreen.png")
 camHelp = pygame.image.load("UI_Images/camHelp.png")
-camEx = pygame.image.load("UI_Images/camEx.png")
+camEx1 = pygame.image.load("UI_Images/camEx1.png")
+camEx2 = pygame.image.load("UI_Images/camEx2.png")
+camEx3 = pygame.image.load("UI_Images/camEx3.png")
+camEx4 = pygame.image.load("UI_Images/camEx4.png")
+camEx5 = pygame.image.load("UI_Images/camEx5.png")
 camSearch = pygame.image.load("UI_Images/camSearch.png")
 mainQuit = pygame.image.load("UI_Images/mainQuit.png")
 camMenu = pygame.image.load("UI_Images/camMenu.png")
@@ -45,7 +49,11 @@ mainScreen = pygame.transform.scale(mainScreen, (display_width, display_height))
 mainHelp = pygame.transform.scale(mainHelp, (display_width, display_height))
 cameraScreen = pygame.transform.scale(cameraScreen, (display_width, display_height))
 camHelp = pygame.transform.scale(camHelp, (display_width, display_height))
-camEx = pygame.transform.scale(camEx, (display_width, display_height))
+camEx1 = pygame.transform.scale(camEx1, (display_width, display_height))
+camEx2 = pygame.transform.scale(camEx2, (display_width, display_height))
+camEx3 = pygame.transform.scale(camEx3, (display_width, display_height))
+camEx4 = pygame.transform.scale(camEx4, (display_width, display_height))
+camEx5 = pygame.transform.scale(camEx5, (display_width, display_height))
 camSearch = pygame.transform.scale(camSearch, (display_width, display_height))
 mainQuit = pygame.transform.scale(mainQuit, (display_width, display_height))
 camMenu = pygame.transform.scale(camMenu, (150, display_height))
@@ -403,7 +411,16 @@ def game_loop():
                             mScreen = True
 
                         if x > 925 and x < 1080 and y > 176 and y < 350:  # mouse is within the example button
-                            gameDisplay.blit(camEx, (0, 0))
+                            if nr == 1:
+                                gameDisplay.blit(camEx1, (0, 0))
+                            if nr == 2:
+                                gameDisplay.blit(camEx2, (0, 0))
+                            if nr == 3:
+                                gameDisplay.blit(camEx3, (0, 0))
+                            if nr == 4:
+                                gameDisplay.blit(camEx4, (0, 0))
+                            if nr == 5:
+                                gameDisplay.blit(camEx5, (0, 0))
                             cScreen = False
                             popUp = True
 
