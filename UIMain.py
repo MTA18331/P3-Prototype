@@ -78,9 +78,10 @@ start = time.time()
 startTime = True
 input_box = pygame.Rect(display_width/2-285, display_height/2+130, 520, 42)
 input_box_popup = pygame.Rect(display_width/2-295, display_height/2-25, 445, 42)
-roi_box = pygame.Rect(70, 50, 500, 500)
+#roi_box = pygame.Rect(86, 91, 500, 500)
+roi_box = pygame.Rect(193, 91, 550, 550)
 font = pygame.font.Font(None, 32)
-#roi = mask[70:270, 50:250]
+
 
 def imageProcessing(nr, start):
 
@@ -193,13 +194,12 @@ def game_loop():
             gameDisplay.fill([243, 243, 243])
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             frame = np.rot90(frame)
-            #cv2.rectangle(frame, (50, 70), (250, 270), (0, 255, 0), 3)
             t = threading.Thread(target=imageProcessing(nr, start), name='thread2', args=(nr,frame))
             frame = pygame.surfarray.make_surface(frame)
             frame = pygame.transform.scale(frame, (920, 720))
             gameDisplay.blit(camMenu, (920, 0))
             gameDisplay.blit(frame, (0, 0))
-            pygame.draw.rect(gameDisplay, [0,255,0], roi_box, 2)
+            pygame.draw.rect(gameDisplay, [0,255,0], roi_box, 2) # ROI green rect
             t.start()
             if nr == 1:
                 gameDisplay.blit(one, (810, 25))  # draws the input on the camerascreen
@@ -212,7 +212,8 @@ def game_loop():
             if nr == 5:
                 gameDisplay.blit(five, (810, 25))  # draws the input on the camerascreen
             res= q.get()
-            if res >= 0 and res <= 0.10:
+            #if res >= 0 and res <= 0.10:
+            if res >= 0.65 and res < 0.99:
 
                 runprogressbar(time.time() - start)
             else:
