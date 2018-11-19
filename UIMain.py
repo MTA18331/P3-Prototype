@@ -6,14 +6,13 @@ import threading
 import image_threshold as imgThre
 from queue import Queue
 
-camera = cv2.VideoCapture(0)
+camera = cv2.VideoCapture(0)    # 0 for webcam
 display_width = 1080
 display_height = 720
 white = (255, 255, 255)
 black = (0, 0, 0)
 
-q= Queue()
-
+q = Queue()
 
 mainScreen = pygame.image.load('UI_Images/mainscreen.png')
 mainHelp = pygame.image.load('UI_Images/mainHelp.png')
