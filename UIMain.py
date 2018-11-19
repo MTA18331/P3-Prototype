@@ -15,7 +15,6 @@ black = (0, 0, 0)
 q= Queue()
 
 
-# <editor-fold desc="Assignment of Images">
 mainScreen = pygame.image.load('UI_Images/mainscreen.png')
 mainHelp = pygame.image.load('UI_Images/mainHelp.png')
 cameraScreen = pygame.image.load("UI_Images/camscreen.png")
@@ -45,9 +44,7 @@ p8 = pygame.image.load("UI_Images/80.png")
 p9 = pygame.image.load("UI_Images/90.png")
 p10 = pygame.image.load("UI_Images/100.png")
 flueben = pygame.image.load("UI_Images/flueben.png")
-# </editor-fold>
 
-# <editor-fold desc="Scaling of the different images">
 mainScreen = pygame.transform.scale(mainScreen, (display_width, display_height))
 mainHelp = pygame.transform.scale(mainHelp, (display_width, display_height))
 cameraScreen = pygame.transform.scale(cameraScreen, (display_width, display_height))
@@ -76,7 +73,6 @@ two = pygame.transform.scale(two, (90, 110))
 three = pygame.transform.scale(three, (90, 110))
 four = pygame.transform.scale(four, (90, 110))
 five = pygame.transform.scale(five, (90, 110))
-# </editor-fold>
 
 pygame.init()
 
@@ -90,6 +86,7 @@ start = time.time()
 startTime = True
 input_box = pygame.Rect(display_width/2-285, display_height/2+130, 520, 42)
 input_box_popup = pygame.Rect(display_width/2-295, display_height/2-25, 445, 42)
+#roi_box = pygame.Rect(86, 91, 500, 500)
 roi_box = pygame.Rect(193, 91, 550, 550)
 font = pygame.font.Font(None, 32)
 
