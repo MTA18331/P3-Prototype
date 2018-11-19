@@ -14,6 +14,7 @@ black = (0, 0, 0)
 
 q = Queue()
 
+# <editor-fold desc="Assignment of images">
 mainScreen = pygame.image.load('UI_Images/mainscreen.png')
 mainHelp = pygame.image.load('UI_Images/mainHelp.png')
 cameraScreen = pygame.image.load("UI_Images/camscreen.png")
@@ -43,7 +44,9 @@ p8 = pygame.image.load("UI_Images/80.png")
 p9 = pygame.image.load("UI_Images/90.png")
 p10 = pygame.image.load("UI_Images/100.png")
 flueben = pygame.image.load("UI_Images/flueben.png")
+# </editor-fold>
 
+# <editor-fold desc="Scaling of the images">
 mainScreen = pygame.transform.scale(mainScreen, (display_width, display_height))
 mainHelp = pygame.transform.scale(mainHelp, (display_width, display_height))
 cameraScreen = pygame.transform.scale(cameraScreen, (display_width, display_height))
@@ -72,6 +75,7 @@ two = pygame.transform.scale(two, (90, 110))
 three = pygame.transform.scale(three, (90, 110))
 four = pygame.transform.scale(four, (90, 110))
 five = pygame.transform.scale(five, (90, 110))
+# </editor-fold>
 
 pygame.init()
 
