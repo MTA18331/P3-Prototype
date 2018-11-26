@@ -90,7 +90,9 @@ startTime = True
 input_box = pygame.Rect(display_width/2-285, display_height/2+130, 520, 42)
 input_box_popup = pygame.Rect(display_width/2-295, display_height/2-25, 445, 42)
 #roi_box = pygame.Rect(86, 91, 500, 500)
-roi_box = pygame.Rect(193, 91, 550, 550)
+#roi_box = pygame.Rect(193, 91, 550, 550)
+roi_box = pygame.Rect(340, 220, 295, 320)
+#roi = mask2[150:350, 240:440]
 font = pygame.font.Font(None, 32)
 
 
@@ -129,7 +131,8 @@ def imageProcessing(nr, start):
 
         mask2 = cv2.inRange(hsv, lower_red, upper_red)
 
-        roi = mask2[60:500, 60:500]
+        #roi = mask2[60:500, 60:500]
+        roi = mask2[150:350, 240:440]
         res = cv2.matchTemplate(roi, mask, cv2.TM_CCOEFF_NORMED)
         minval, maxval, minlog, maxlog= cv2.minMaxLoc(res)
         res = maxval
@@ -224,7 +227,7 @@ def game_loop():
                 gameDisplay.blit(five, (810, 25))  # draws the input on the camerascreen
             res= q.get()
             #if res >= 0 and res <= 0.10:
-            if res >= 0.65 and res < 0.99:
+            if res >= 0.75 and res < 0.99:
 
                 runprogressbar(time.time() - start)
             else:

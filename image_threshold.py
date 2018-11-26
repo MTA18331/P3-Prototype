@@ -8,7 +8,8 @@ img5 = cv2.imread('5.png',0)
 
 # mean blurring
 def mask(image):
-    image=cv2.resize(image,(440,440))
+    image=cv2.resize(image,(200,200))
+    #440, 440
 
     return image
 
