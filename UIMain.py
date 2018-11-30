@@ -12,7 +12,7 @@ display_height = 720
 white = (255, 255, 255)
 black = (0, 0, 0)
 
-q = Queue()
+q = Queue()     # q is equal to the value Queue() returns
 
 # <editor-fold desc="Assignment of images">
 mainScreen = pygame.image.load('UI_Images/mainscreen.png')
@@ -77,79 +77,56 @@ four = pygame.transform.scale(four, (90, 110))
 five = pygame.transform.scale(five, (90, 110))
 # </editor-fold>
 
-pygame.init()
+pygame.init()   # Initializes pygame to use it
 
-gameDisplay = pygame.display.set_mode((display_width, display_height))#, pygame.FULLSCREEN)
-pygame.display.set_caption('Danske Tegn Bank')
+gameDisplay = pygame.display.set_mode((display_width, display_height),pygame.FULLSCREEN)  #set_mode sets the size of the app window
+pygame.display.set_caption('Danske Tegn Bank')  #name in window bar
 
 clock = pygame.time.Clock()
-pygame.display.update()
 clock.tick(60)  # frames per second
-start = time.time()
-startTime = True
-input_box = pygame.Rect(display_width/2-285, display_height/2+130, 520, 42)
-input_box_popup = pygame.Rect(display_width/2-295, display_height/2-25, 445, 42)
-#roi_box = pygame.Rect(86, 91, 500, 500)
-#roi_box = pygame.Rect(193, 91, 550, 550)
+input_box = pygame.Rect(display_width/2-285, display_height/2+130, 520, 42) # searchbox
+input_box_popup = pygame.Rect(display_width/2-295, display_height/2-25, 445, 42)    # searchbox in popup
+
 roi_box = pygame.Rect(340, 220, 295, 320)
-#roi = mask2[150:350, 240:440]
-font = pygame.font.Font(None, 32)
+
+font = pygame.font.Font(None, 32) # Font for the searchbox. Here we use the default font.
 
 
-def imageProcessing(nr, start):
+def imageProcessing(nr):
 
-        #print(frame)
-        #frame = cv2.flip(frame, +1)
-        ret, frame = camera.read()
-        frame = cv2.flip(frame, +1)
+        ret, frame = camera.read()  #ret is not used but it is a boolean
+        frame = cv2.flip(frame, 1)  # the 1 tells flip() to flip the video horizontally
+
         if nr == 1:
-            mask =  imgThre.mask(imgThre.img1)
+            mask = imgThre.mask(imgThre.img1)
         elif nr == 2:
-            mask =  imgThre.mask(imgThre.img2)
+            mask = imgThre.mask(imgThre.img2)
         elif nr == 3:
             mask = imgThre.mask(imgThre.img3)
-        elif nr==4:
-            mask =  imgThre.mask(imgThre.img4)
+        elif nr == 4:
+            mask = imgThre.mask(imgThre.img4)
         elif nr == 5:
             mask = imgThre.mask(imgThre.img5)
 
-        template = mask
-        w, h = template.shape[::-1]
-
-
-
-        #ret, frame = camera.read()
-        #frame = cv2.flip(frame, +1)
-
-        kernel = np.ones((10, 10), np.float32) / 100
+        kernel = np.ones((10, 10)) / 100    # Mean blur
         smoothed = cv2.filter2D(frame, -1, kernel)
 
         hsv = cv2.cvtColor(smoothed, cv2.COLOR_BGR2HSV)
 
-        lower_red = np.array([80, 140, 35])  # [90, 100, 150]) grøn handske
-        upper_red = np.array([97, 255, 175])
+        lowerGreen = np.array([80, 140, 35])  # [90, 100, 150]) grøn handske
+        upperGreen = np.array([97, 255, 175])
 
-        mask2 = cv2.inRange(hsv, lower_red, upper_red)
+        mask2 = cv2.inRange(hsv, lowerGreen, upperGreen)    # everything in the range is set equal to 1 and everything else is equal to 0
 
-        #roi = mask2[60:500, 60:500]
         roi = mask2[150:350, 240:440]
         res = cv2.matchTemplate(roi, mask, cv2.TM_CCOEFF_NORMED)
-        minval, maxval, minlog, maxlog= cv2.minMaxLoc(res)
+        minval, maxval, minloc, maxloc= cv2.minMaxLoc(res)
         res = maxval
 
-        #print(minval, minlog, maxlog)
-        cv2.imshow("roi",roi)
-        cv2.imshow("mask", mask)
+        #cv2.imshow("roi",roi)
+        #cv2.imshow("mask", mask)
         print(res)
         q.put(res)
-        #print("res ", res)
-          # draws the box
-        #send res to main thread
-
-            #if timer >= 5:
-             #   print('Yay, res is: ', res)
-              #  cv2.rectangle(frame, (300,70), (600,100), (50,50,50), -1)
-               # cv2.putText(frame, "YOu be good", (310, 90), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255))
 
 
 def runprogressbar(input):
@@ -208,7 +185,7 @@ def game_loop():
             gameDisplay.fill([243, 243, 243])
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             frame = np.rot90(frame)
-            t = threading.Thread(target=imageProcessing(nr, start), name='thread2', args=(nr,frame))
+            t = threading.Thread(target=imageProcessing(nr), name='thread2', args=(nr,frame))
             frame = pygame.surfarray.make_surface(frame)
             frame = pygame.transform.scale(frame, (920, 720))
             gameDisplay.blit(camMenu, (920, 0))
@@ -227,7 +204,7 @@ def game_loop():
                 gameDisplay.blit(five, (810, 25))  # draws the input on the camerascreen
             res= q.get()
             #if res >= 0 and res <= 0.10:
-            if res >= 0.75 and res < 0.99:
+            if res >= 0.70 and res < 0.99:
 
                 runprogressbar(time.time() - start)
             else:
