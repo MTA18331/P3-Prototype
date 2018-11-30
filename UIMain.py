@@ -103,23 +103,23 @@ def imageProcessing(nr):
             mask3 = imgThre.mask(imgThre.img13)
         elif nr == 2:
             mask = imgThre.mask(imgThre.img2)
-            mask2 = imgThre.mask(imgThre.img12)
-            mask3 = imgThre.mask(imgThre.img13)
+            mask22 = imgThre.mask(imgThre.img12)
+            mask23 = imgThre.mask(imgThre.img13)
         elif nr == 3:
             mask = imgThre.mask(imgThre.img3)
-            mask2 = imgThre.mask(imgThre.img12)
-            mask3 = imgThre.mask(imgThre.img13)
+            mask32 = imgThre.mask(imgThre.img12)
+            mask33 = imgThre.mask(imgThre.img13)
         elif nr == 4:
             mask = imgThre.mask(imgThre.img4)
-            mask2 = imgThre.mask(imgThre.img12)
-            mask3 = imgThre.mask(imgThre.img13)
+            mask42 = imgThre.mask(imgThre.img12)
+            mask43 = imgThre.mask(imgThre.img13)
         elif nr == 5:
             mask = imgThre.mask(imgThre.img5)
-            mask2 = imgThre.mask(imgThre.img12)
-            mask3 = imgThre.mask(imgThre.img13)
+            mask52 = imgThre.mask(imgThre.img12)
+            mask53 = imgThre.mask(imgThre.img13)
 
-        template = mask
-        w, h = template.shape[::-1]
+        #template = mask
+        #w, h = template.shape[::-1]
 
         # ret, frame = camera.read()
         # frame = cv2.flip(frame, +1)
@@ -134,7 +134,7 @@ def imageProcessing(nr):
 
         maskFrame = cv2.inRange(hsv, lower_red, upper_red)
 
-        roi = maskFrame[60:500, 60:500]
+        roi = maskFrame[150:360, 240:450]
         res1 = cv2.matchTemplate(roi, mask, cv2.TM_CCOEFF_NORMED)
         minval, maxval, minlog, maxlog = cv2.minMaxLoc(res1)
         res1 = maxval
@@ -148,6 +148,17 @@ def imageProcessing(nr):
         res3 = maxval3
         result = max(res1, res2, res3)
         cv2.imshow('roi', roi)
+
+        if res1 > res2 and res1 > res3:
+            print('res1: ',res1)
+            cv2.imshow('res1', mask)
+        if res2 > res1 and res2 > res3:
+            print('res 2: ',res2)
+            cv2.imshow('res2', mask2)
+        if res3 > res1 and res3 > res2:
+            print('res 3: ',res3)
+            cv2.imshow('res3', mask3)
+
         print("Result is: ", result)
         q.put(result)
 
@@ -226,7 +237,7 @@ def game_loop():
                 gameDisplay.blit(five, (810, 25))  # draws the input on the camerascreen
             result= q.get()
             #if res >= 0 and res <= 0.10:
-            if result >= 0.70 and result < 0.99:
+            if result >= 0.80 and result < 0.99:
 
                 runprogressbar(time.time() - start)
             else:
