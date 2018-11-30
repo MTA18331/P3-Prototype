@@ -5,11 +5,14 @@ img2 = cv2.imread('2.png',0)
 img3 = cv2.imread('3.png',0)
 img4 = cv2.imread('4.png',0)
 img5 = cv2.imread('5.png',0)
+img12 = cv2.imread('12.png', 0)
+img13 = cv2.imread('13.png', 0)
+img14 = cv2.imread('14.png', 0)
+img15 = cv2.imread('15.png', 0)
 
 # mean blurring
 def mask(image):
     image=cv2.resize(image,(200,200))
     #440, 440
-
     return image
 

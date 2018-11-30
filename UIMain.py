@@ -79,7 +79,7 @@ five = pygame.transform.scale(five, (90, 110))
 
 pygame.init()   # Initializes pygame to use it
 
-gameDisplay = pygame.display.set_mode((display_width, display_height),pygame.FULLSCREEN)  #set_mode sets the size of the app window
+gameDisplay = pygame.display.set_mode((display_width, display_height)) #pygame.FULLSCREEN)  #set_mode sets the size of the app window
 pygame.display.set_caption('Danske Tegn Bank')  #name in window bar
 
 clock = pygame.time.Clock()
@@ -99,24 +99,24 @@ def imageProcessing(nr):
 
         if nr == 1:
             mask = imgThre.mask(imgThre.img1)
-            mask2 = imgThre.mask()
-            mask3 = imgThre.mask()
+            mask2 = imgThre.mask(imgThre.img12)
+            mask3 = imgThre.mask(imgThre.img13)
         elif nr == 2:
             mask = imgThre.mask(imgThre.img2)
-            mask2 = imgThre.mask()
-            mask3 = imgThre.mask()
+            mask2 = imgThre.mask(imgThre.img12)
+            mask3 = imgThre.mask(imgThre.img13)
         elif nr == 3:
             mask = imgThre.mask(imgThre.img3)
-            mask2 = imgThre.mask()
-            mask3 = imgThre.mask()
+            mask2 = imgThre.mask(imgThre.img12)
+            mask3 = imgThre.mask(imgThre.img13)
         elif nr == 4:
             mask = imgThre.mask(imgThre.img4)
-            mask2 = imgThre.mask()
-            mask3 = imgThre.mask()
+            mask2 = imgThre.mask(imgThre.img12)
+            mask3 = imgThre.mask(imgThre.img13)
         elif nr == 5:
             mask = imgThre.mask(imgThre.img5)
-            mask2 = imgThre.mask()
-            mask3 = imgThre.mask()
+            mask2 = imgThre.mask(imgThre.img12)
+            mask3 = imgThre.mask(imgThre.img13)
 
         template = mask
         w, h = template.shape[::-1]
@@ -147,6 +147,7 @@ def imageProcessing(nr):
         minval3, maxval3, minlog3, maxlog3 = cv2.minMaxLoc(res3)
         res3 = maxval3
         result = max(res1, res2, res3)
+        cv2.imshow('roi', roi)
         print("Result is: ", result)
         q.put(result)
 
@@ -223,9 +224,9 @@ def game_loop():
                 gameDisplay.blit(four, (810, 25))  # draws the input on the camerascreen
             if nr == 5:
                 gameDisplay.blit(five, (810, 25))  # draws the input on the camerascreen
-            res= q.get()
+            result= q.get()
             #if res >= 0 and res <= 0.10:
-            if res >= 0.70 and res < 0.99:
+            if result >= 0.70 and result < 0.99:
 
                 runprogressbar(time.time() - start)
             else:
