@@ -99,35 +99,56 @@ def imageProcessing(nr):
 
         if nr == 1:
             mask = imgThre.mask(imgThre.img1)
+            mask2 = imgThre.mask()
+            mask3 = imgThre.mask()
         elif nr == 2:
             mask = imgThre.mask(imgThre.img2)
+            mask2 = imgThre.mask()
+            mask3 = imgThre.mask()
         elif nr == 3:
             mask = imgThre.mask(imgThre.img3)
+            mask2 = imgThre.mask()
+            mask3 = imgThre.mask()
         elif nr == 4:
             mask = imgThre.mask(imgThre.img4)
+            mask2 = imgThre.mask()
+            mask3 = imgThre.mask()
         elif nr == 5:
             mask = imgThre.mask(imgThre.img5)
+            mask2 = imgThre.mask()
+            mask3 = imgThre.mask()
 
-        kernel = np.ones((10, 10)) / 100    # Mean blur
+        template = mask
+        w, h = template.shape[::-1]
+
+        # ret, frame = camera.read()
+        # frame = cv2.flip(frame, +1)
+
+        kernel = np.ones((10, 10), np.float32) / 100
         smoothed = cv2.filter2D(frame, -1, kernel)
 
         hsv = cv2.cvtColor(smoothed, cv2.COLOR_BGR2HSV)
 
-        lowerGreen = np.array([80, 140, 35])  # [90, 100, 150]) grøn handske
-        upperGreen = np.array([97, 255, 175])
+        lower_red = np.array([80, 140, 35])  # [90, 100, 150]) grøn handske
+        upper_red = np.array([97, 255, 175])
 
-        mask2 = cv2.inRange(hsv, lowerGreen, upperGreen)    # everything in the range is set equal to 1 and everything else is equal to 0
+        maskFrame = cv2.inRange(hsv, lower_red, upper_red)
 
-        roi = mask2[150:350, 240:440]
-        res = cv2.matchTemplate(roi, mask, cv2.TM_CCOEFF_NORMED)
-        minval, maxval, minloc, maxloc= cv2.minMaxLoc(res)
-        res = maxval
+        roi = maskFrame[60:500, 60:500]
+        res1 = cv2.matchTemplate(roi, mask, cv2.TM_CCOEFF_NORMED)
+        minval, maxval, minlog, maxlog = cv2.minMaxLoc(res1)
+        res1 = maxval
 
-        #cv2.imshow("roi",roi)
-        #cv2.imshow("mask", mask)
-        print(res)
-        q.put(res)
+        res2 = cv2.matchTemplate(roi, mask2, cv2.TM_CCOEFF_NORMED)
+        minval2, maxval2, minlog2, maxlog2 = cv2.minMaxLoc(res2)
+        res2 = maxval2
 
+        res3 = cv2.matchTemplate(roi, mask3, cv2.TM_CCOEFF_NORMED)
+        minval3, maxval3, minlog3, maxlog3 = cv2.minMaxLoc(res3)
+        res3 = maxval3
+        result = max(res1, res2, res3)
+        print("Result is: ", result)
+        q.put(result)
 
 def runprogressbar(input):
 
