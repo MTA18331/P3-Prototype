@@ -103,20 +103,20 @@ def imageProcessing(nr):
             mask3 = imgThre.mask(imgThre.img13)
         elif nr == 2:
             mask = imgThre.mask(imgThre.img2)
-            mask22 = imgThre.mask(imgThre.img12)
-            mask23 = imgThre.mask(imgThre.img13)
+            mask2 = imgThre.mask(imgThre.img2Right)
+            mask3 = imgThre.mask(imgThre.img2Left)
         elif nr == 3:
             mask = imgThre.mask(imgThre.img3)
-            mask32 = imgThre.mask(imgThre.img12)
-            mask33 = imgThre.mask(imgThre.img13)
+            mask2 = imgThre.mask(imgThre.img12)
+            mask3 = imgThre.mask(imgThre.img13)
         elif nr == 4:
             mask = imgThre.mask(imgThre.img4)
-            mask42 = imgThre.mask(imgThre.img12)
-            mask43 = imgThre.mask(imgThre.img13)
+            mask2 = imgThre.mask(imgThre.img12)
+            mask3 = imgThre.mask(imgThre.img13)
         elif nr == 5:
             mask = imgThre.mask(imgThre.img5)
-            mask52 = imgThre.mask(imgThre.img12)
-            mask53 = imgThre.mask(imgThre.img13)
+            mask2 = imgThre.mask(imgThre.img12)
+            mask3 = imgThre.mask(imgThre.img13)
 
         #template = mask
         #w, h = template.shape[::-1]
@@ -207,8 +207,6 @@ def game_loop():
     startTime = True
 
     gameDisplay.blit(mainScreen, (0, 0))
-
-
 
     while not game_exit:
 
