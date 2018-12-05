@@ -40,22 +40,22 @@
     <session id="1533586098">
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="960" />
+          <entry key="py" value="982" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="960" />
+          <entry key="Python" value="982" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="6" />
-          <entry key="project.open.time.0" value="2" />
-          <entry key="project.open.time.4" value="3" />
+          <entry key="project.closed" value="7" />
+          <entry key="project.open.time.0" value="3" />
+          <entry key="project.open.time.4" value="4" />
           <entry key="project.open.time.5" value="1" />
           <entry key="project.open.time.6" value="1" />
-          <entry key="project.opened" value="7" />
+          <entry key="project.opened" value="9" />
         </counts>
       </usages-collector>
     </session>
@@ -65,14 +65,14 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/UIMain.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="78" lean-forward="true" selection-start-line="78" selection-end-line="78" />
+            <state relative-caret-position="204">
+              <caret line="131" column="41" selection-start-line="131" selection-start-column="41" selection-end-line="131" selection-end-column="41" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
                 <element signature="e#323#366#0" />
                 <element signature="e#1809#1853#0" />
-                <marker date="1543574508990" expanded="true" signature="367:1790" ph="..." />
-                <marker date="1543574508990" expanded="true" signature="1854:3476" ph="..." />
+                <marker date="1544010267743" expanded="true" signature="367:1790" ph="..." />
+                <marker date="1544010267743" expanded="true" signature="1854:3476" ph="..." />
               </folding>
             </state>
           </provider>
@@ -81,8 +81,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/image_threshold.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="21" lean-forward="true" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
+            <state relative-caret-position="221">
+              <caret line="13" column="6" lean-forward="true" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -119,6 +119,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -130,7 +131,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -219,21 +219,21 @@
     <entry file="file://$PROJECT_DIR$/templateMatching2.py" />
     <entry file="file://$PROJECT_DIR$/image_threshold.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="21" lean-forward="true" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
+        <state relative-caret-position="221">
+          <caret line="13" column="6" lean-forward="true" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="6" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/UIMain.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="78" lean-forward="true" selection-start-line="78" selection-end-line="78" />
+        <state relative-caret-position="204">
+          <caret line="131" column="41" selection-start-line="131" selection-start-column="41" selection-end-line="131" selection-end-column="41" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
             <element signature="e#323#366#0" />
             <element signature="e#1809#1853#0" />
-            <marker date="1543574508990" expanded="true" signature="367:1790" ph="..." />
-            <marker date="1543574508990" expanded="true" signature="1854:3476" ph="..." />
+            <marker date="1544010267743" expanded="true" signature="367:1790" ph="..." />
+            <marker date="1544010267743" expanded="true" signature="1854:3476" ph="..." />
           </folding>
         </state>
       </provider>

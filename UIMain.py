@@ -107,16 +107,16 @@ def imageProcessing(nr):
             mask3 = imgThre.mask(imgThre.img2Left)
         elif nr == 3:
             mask = imgThre.mask(imgThre.img3)
-            mask2 = imgThre.mask(imgThre.img12)
-            mask3 = imgThre.mask(imgThre.img13)
+            mask2 = imgThre.mask(imgThre.img3Left)
+            mask3 = imgThre.mask(imgThre.img3Right)
         elif nr == 4:
             mask = imgThre.mask(imgThre.img4)
-            mask2 = imgThre.mask(imgThre.img12)
-            mask3 = imgThre.mask(imgThre.img13)
+            mask2 = imgThre.mask(imgThre.img4Left)
+            mask3 = imgThre.mask(imgThre.img4Right)
         elif nr == 5:
             mask = imgThre.mask(imgThre.img5)
-            mask2 = imgThre.mask(imgThre.img12)
-            mask3 = imgThre.mask(imgThre.img13)
+            mask2 = imgThre.mask(imgThre.img5Left)
+            mask3 = imgThre.mask(imgThre.img5Right)
 
         #template = mask
         #w, h = template.shape[::-1]
@@ -129,7 +129,7 @@ def imageProcessing(nr):
 
         hsv = cv2.cvtColor(smoothed, cv2.COLOR_BGR2HSV)
 
-        lower_red = np.array([80, 140, 35])  # [90, 100, 150]) grøn handske
+        lower_red = np.array([80, 140, 10])  # [90, 100, 150]) grøn handske
         upper_red = np.array([97, 255, 175])
 
         maskFrame = cv2.inRange(hsv, lower_red, upper_red)
@@ -235,7 +235,7 @@ def game_loop():
                 gameDisplay.blit(five, (810, 25))  # draws the input on the camerascreen
             result= q.get()
             #if res >= 0 and res <= 0.10:
-            if result >= 0.80 and result < 0.99:
+            if result >= 0.75 and result < 0.99:
 
                 runprogressbar(time.time() - start)
             else:
