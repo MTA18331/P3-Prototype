@@ -129,35 +129,37 @@ def imageProcessing(nr):
 
         hsv = cv2.cvtColor(smoothed, cv2.COLOR_BGR2HSV)
 
-        lower_red = np.array([80, 140, 10])  # [90, 100, 150]) grøn handske
-        upper_red = np.array([97, 255, 175])
+        lower_val = np.array([80, 140, 10])  # [90, 100, 150]) grøn handske
+        upper_val = np.array([97, 255, 175])
 
-        maskFrame = cv2.inRange(hsv, lower_red, upper_red)
+        maskFrame = cv2.inRange(hsv, lower_val, upper_val)
+
 
         roi = maskFrame[150:360, 240:450]
-        res1 = cv2.matchTemplate(roi, mask, cv2.TM_CCOEFF_NORMED)
+        res1 = cv2.matchTemplate(roi, mask, cv2.TM_CCORR_NORMED)
         minval, maxval, minlog, maxlog = cv2.minMaxLoc(res1)
         res1 = maxval
 
-        res2 = cv2.matchTemplate(roi, mask2, cv2.TM_CCOEFF_NORMED)
+        res2 = cv2.matchTemplate(roi, mask2, cv2.TM_CCORR_NORMED)
         minval2, maxval2, minlog2, maxlog2 = cv2.minMaxLoc(res2)
         res2 = maxval2
 
-        res3 = cv2.matchTemplate(roi, mask3, cv2.TM_CCOEFF_NORMED)
+        res3 = cv2.matchTemplate(roi, mask3, cv2.TM_CCORR_NORMED)
         minval3, maxval3, minlog3, maxlog3 = cv2.minMaxLoc(res3)
         res3 = maxval3
+
         result = max(res1, res2, res3)
         cv2.imshow('roi', roi)
 
         if res1 > res2 and res1 > res3:
             print('res1: ',res1)
-            cv2.imshow('res1', mask)
+            #cv2.imshow('res1', mask)
         if res2 > res1 and res2 > res3:
             print('res 2: ',res2)
-            cv2.imshow('res2', mask2)
+            #cv2.imshow('res2', mask2)
         if res3 > res1 and res3 > res2:
             print('res 3: ',res3)
-            cv2.imshow('res3', mask3)
+            #cv2.imshow('res3', mask3)
 
         print("Result is: ", result)
         q.put(result)

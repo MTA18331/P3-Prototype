@@ -19,6 +19,7 @@ img5Right = cv2.imread('5_Right.png', 0)
 img5Left = cv2.imread('5_Left.png', 0)
 
 
+
 # mean blurring
 def mask(image):
     image=cv2.resize(image,(200,200))
