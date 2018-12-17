@@ -79,7 +79,7 @@ five = pygame.transform.scale(five, (90, 110))
 
 pygame.init()   # Initializes pygame to use it
 
-gameDisplay = pygame.display.set_mode((display_width, display_height)) #pygame.FULLSCREEN)  #set_mode sets the size of the app window
+gameDisplay = pygame.display.set_mode((display_width, display_height), pygame.FULLSCREEN)  #set_mode sets the size of the app window
 pygame.display.set_caption('Danske Tegn Bank')  #name in window bar
 
 clock = pygame.time.Clock()
@@ -137,7 +137,7 @@ def imageProcessing(nr):
 
         roi = maskFrame[150:360, 240:450]
         res1 = cv2.matchTemplate(roi, mask, cv2.TM_CCORR_NORMED)
-        minval, maxval, minlog, maxlog = cv2.minMaxLoc(res1)
+        minval, maxval, minloc, maxloc = cv2.minMaxLoc(res1)
         res1 = maxval
 
         res2 = cv2.matchTemplate(roi, mask2, cv2.TM_CCORR_NORMED)
@@ -149,7 +149,7 @@ def imageProcessing(nr):
         res3 = maxval3
 
         result = max(res1, res2, res3)
-        cv2.imshow('roi', roi)
+        #cv2.imshow('roi', roi)
 
         if res1 > res2 and res1 > res3:
             print('res1: ',res1)
@@ -164,11 +164,12 @@ def imageProcessing(nr):
         print("Result is: ", result)
         q.put(result)
 
+
 def runprogressbar(input):
 
-    if input == 0:
-        gameDisplay.blit(p0, (35, 400))
-    elif input <= 0.3:
+
+    gameDisplay.blit(p0, (35, 400))
+    if input <= 0.3:
         gameDisplay.blit(p1, (35, 400))
     elif input <= 0.6:
         gameDisplay.blit(p2, (35, 400))
@@ -205,8 +206,6 @@ def game_loop():
     nr = 0
     active = True
     text = ''
-    global startTime
-    startTime = True
 
     gameDisplay.blit(mainScreen, (0, 0))
 
@@ -218,7 +217,7 @@ def game_loop():
             gameDisplay.fill([243, 243, 243])
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             frame = np.rot90(frame)
-            t = threading.Thread(target=imageProcessing(nr), name='thread2', args=(nr,frame))
+            t = threading.Thread(target=imageProcessing(nr), name='thread2')
             frame = pygame.surfarray.make_surface(frame)
             frame = pygame.transform.scale(frame, (920, 720))
             gameDisplay.blit(camMenu, (920, 0))
@@ -236,17 +235,12 @@ def game_loop():
             if nr == 5:
                 gameDisplay.blit(five, (810, 25))  # draws the input on the camerascreen
             result= q.get()
-            #if res >= 0 and res <= 0.10:
             if result >= 0.75 and result < 0.99:
 
                 runprogressbar(time.time() - start)
             else:
                 start=time.time()
             pygame.display.update()
-            try:
-                t.start()
-            except:
-                1+1
             #lavimageprocessing() in another thread
             ################
 
